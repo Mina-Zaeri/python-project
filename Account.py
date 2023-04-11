@@ -26,10 +26,16 @@ class Account:
                            acc[user_id]["acc_fine"]
                             )
     def add_borrowed_book(self,book):
+        temp_list=None
+        dic={"title":book.title,"author":book.author,"isbn":book.isbn}
+        with open("accounts.json", "r") as fd:
+            temp_list = json.load(fd)
+            temp_list[self.user_id]["l_books_borrowed"].append(dic)
+
         with open("accounts.json", "w") as fd:
-            accounts = json.load(fd)
-            #templist=[book.title,book.author,book.isbn,1]
-            accounts[self.user_id]["l_books_borrowed"].append(book)
+            fd.write(str(temp_list).replace("'", '"'))
+               
+        #     accounts[self.user_id]["l_books_borrowed"]=temp_list
         
     def printBorrowedBooks(self):
         for i , b in enumerate(self.l_books_borrowed, start=1):
