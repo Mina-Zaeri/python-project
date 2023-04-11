@@ -17,9 +17,10 @@ class LibManSystem:
     def loadBooks(db):
         with open("book2.json", "r") as fd:
             books = json.load(fd)
+            
         for book in books:
             # print(b['isbn'], b['title'])#man ye instance az class BOOK sakhtam
-            bookclass=Book(book["title"],book["authors"],book["isbn"],2)
+            bookclass=Book(book["title"],book["authors"],book["isbn"],100)
             db.insertBook(bookclass) #pasesh dadam be in insertbook
         
     @classmethod                                            
@@ -41,9 +42,10 @@ class LibManSystem:
         if verify:
             print("Welcome....")
             if userinfo["user_type"] == "Staff":
-                print ('Staff')
+                
                #,userinfo["history_return"],userinfo["l_lost_Books"],userinfo["acc_fine"]
-                usr = Staff(userinfo["id"],userinfo["f_name"],userinfo["dept"],Account(userinfo["id"], userinfo["password"], userinfo["f_name"],userinfo["l_books_borrowed"],userinfo["l_books_reserved"]))
+                usr = Staff(userinfo["id"],userinfo["f_name"],userinfo["dept"],
+                            Account(userinfo["id"], userinfo["password"], userinfo["f_name"],userinfo["l_books_borrowed"],userinfo["l_books_reserved"]))
                 usr.menu()
             elif userinfo["user_type"] == "Student":pass
                # usr = Student(userinfo["name"],userid,userinfo["class"])
