@@ -1,0 +1,2 @@
+class Libarian(User):
+    pass
