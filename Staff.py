@@ -23,7 +23,6 @@ class Staff(User):
             search_arg=input("*************\nPlease inter part or compelte of author's name or isbn number or book's name:")
             show=LibDatabase()
             result=show.search(search_arg)
-            
             if result ==[]  :
                 print ("There is no any book with this info")
     
