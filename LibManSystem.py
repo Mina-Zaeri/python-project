@@ -44,7 +44,7 @@ class LibManSystem:
             if userinfo["user_type"] == "Staff":
                 
                #,userinfo["history_return"],userinfo["l_lost_Books"],userinfo["acc_fine"]
-                usr = Staff(userinfo["id"],userinfo["f_name"],userinfo["dept"],
+                usr = Staff(userinfo["f_name"],userinfo["id"],userinfo["dept"],
                             Account(userinfo["id"], userinfo["password"], userinfo["f_name"],userinfo["l_books_borrowed"],userinfo["l_books_reserved"]))
                 usr.menu()
             elif userinfo["user_type"] == "Student":pass

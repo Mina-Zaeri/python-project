@@ -35,8 +35,46 @@ class Account:
         with open("accounts.json", "w") as fd:
             fd.write(str(temp_list).replace("'", '"'))
                
-        #     accounts[self.user_id]["l_books_borrowed"]=temp_list
+       
+    
         
+    def add_return_book(self,book):
+        temp_list=None
+        dic={"title":book.title,"author":book.author,"isbn":book.isbn}
+        with open("accounts.json", "r") as fd:
+            temp_list = json.load(fd)
+            data= temp_list[self.user_id]["l_books_borrowed"]
+            print(book.isbn)
+            print(book.author)
+            print(book.title)
+          
+            for index,bookItem in enumerate(temp_list[self.user_id]["l_books_borrowed"]):
+                # print(bookItem['isbn'])
+                # print(book['isbn'])
+                # print(bookItem['isbn']==book['isbn'],bookItem['isbn'],book['isbn'])
+                if bookItem['isbn']==book.isbn:
+                   
+                   data.pop(index)
+                   with open("accounts.json", "r") as fd:
+                        history_return = json.load(fd)
+                        history_return[self.user_id]["history_return"].append(dic)
+
+                   with open("accounts.json", "w") as fd:
+                        fd.write(str(history_return).replace("'", '"'))
+                           
+           
+
+        ###remove edame dahim
+    
+    
+    
+    def add_decrease_avavilabe_book(self,book):
+        pass
+    
+    
+    
+    
+    
     def printBorrowedBooks(self):
         for i , b in enumerate(self.l_books_borrowed, start=1):
             if i == 1: 

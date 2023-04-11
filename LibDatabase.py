@@ -2,7 +2,7 @@ import sqlite3
 class LibDatabase:
     def __init__(self):
         
-        self.connection = sqlite3.connect('db33.db')#:memory:
+        self.connection = sqlite3.connect('dbtest2.db')#:memory:
         self.cursor = self.connection.cursor()
 
         self.cursor.execute("""CREATE TABLE IF NOT EXISTS  books(
@@ -23,10 +23,10 @@ class LibDatabase:
                
         except:
              pass
-    def search(self,s):
+    def search(self,search_arg):
         with self.connection:
-            s = '%'+s+'%'
-            self.cursor.execute('SELECT * FROM books WHERE isbn LIKE ? OR author LIKE ? OR title LIKE ?',(s,s,s))
+            search_arg = '%'+search_arg+'%'
+            self.cursor.execute('SELECT * FROM books WHERE isbn LIKE ? OR author LIKE ? OR title LIKE ?',(search_arg,search_arg,search_arg))
             return self.cursor.fetchall()   
            
           
