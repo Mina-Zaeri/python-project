@@ -29,7 +29,7 @@ class LibManSystem:
             # print(acc)  
         if userid in accounts:
             if accounts[userid]['password'] == password:
-                return True, accounts[userid]
+                return True, accounts[userid
         return False, None
     
     @classmethod       
