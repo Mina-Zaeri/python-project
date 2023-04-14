@@ -1,87 +1,140 @@
-class Student(User): 
-    b_limit = 3
-    def __init__(self,f,s,dept,acc=None):
-        super().__init__(f,s,acc)
-        self.d = dept
-
-    def menu(self):
-        print(f"""menu for Student
-1. Option 1  ~search
-2. Option 2 ~List borrowed books
-3. Option 3 ~Add book
-4. Option 4 ~User record
-q. Return
-
-""")
-        while True:
-            c = input("\nSelect Option (1-4|q): ")
-            choice = {"1" :self.f_opt1,
-                  "2" :self.f_opt2,
-                  "3" :self.f_opt3,
-                  "4" :self.f_opt4,
-                  "q" :"q"}.get(c,"invalid")        
-            if choice == "q":
-                print('Bye..')
-                break
-            elif choice != "invalid":
-                choice()
-            else:
-                print("Try again...")
-
-    def f_opt1(self):
-        print("option-1")
-        if 439785960 in self.account.l_books_borrowed:
-           self.account.l_books_borrowed.remove(439785960)
-           self.account.l_books_borrowed.append(439785960)
-        else:
-           print ("dfdfdfdf")
-    def f_opt2(self):
-        print("option-2")
-        self.account.printBorrowedBooks()
-    def f_opt3(self):
-        print("option-3~")
-        # check if the book is availble
-        fbooks=bcu.db.search("title","harry")
-        for i,v in enumerate((fbooks),strat=1) :
-            print (i,v)
-        lc=len(fbooks)
-        choice =int (input("select:"))
-        if choice <=lc:
-            print (f"choice selected {fbooks [choice-1].isbn}")
-        else:
-            print ("go slow")
-        self.account.l_books_borrowed.append(439785960)
-        self.account.l_books_borrowed.append(fbooks[choice-1].isbn)
-        # print(f">>Saving: {LibaryData.d_books.get(439785960,'Unkown')}")
-        # update file
-    def f_opt4(self):
-        # print current status
-        print(self)
-    def f_ex(self):
-        return
-    def __repr__(self):
-        return f"{self.f}\n {self.account}"
-   
-    def foo(self):
-        print("You called foo")
+from User import User
+from LibDatabase import LibDatabase
+from Book import Book
+import json
+class Staff(User):
+    
+    def __init__(self, name, userid,account):#account agregation shode
+        super().__init__(name, userid)
         
+        self.account=account
+
     def menu(self):
-        while True:
+        print("""
+              1.Borrow Books
+              2.Return Books
+              3.Lost Books
+              4.Report
+              5.Calculate fine
+              q.Quit
+              
+              """)         
+        opt_staff=input ("Please input the number of option:")
+        
+        if opt_staff=="1" :
+            self.handle_borrowed_book()
+        elif opt_staff=="2" :
+           self.handle_return_book()
+        elif opt_staff=="3" :
+           self.handle_lost_book()
+        elif opt_staff=="4" :
+           self.book()
+            
+           
+            
+           
+    def handle_borrowed_book(self):##1
+        
+        search_arg=input("*************\nPlease inter part or compelte of author's name or isbn number or book's name:")
+        show=LibDatabase()
+        result=show.search(search_arg)
+        if result ==[]  :
+            print ("There is no any book with this info")
+
+        else : 
+            for book in result:
+                
+                print (f"""Title:{book[1]} 
+                             Isbn:{book[0]}
+                             Athour:{book[2]}
+                             Availabe:{book[3]}
+                        """)
+           
+                
+            isbn=input ("These are all of books available \n\nNow import the isbn number is selected:")  
+            bookclass=None
+            for book in result:
+                if isbn==book[0] and book[3]:
+                    bookclass=Book(book[1],book[2],book[0],book[3]) #instance az class book
+                    
+            if bookclass==None:
+                print ("book not found or not avaliable")
+                return 0
+            result=show.issue_book(bookclass)
+            self.account.add_borrowed_book(bookclass)
+            
+            
+            
+    def handle_return_book(self):##2
+        with open("accounts.json", "r") as fd:
+            accounts_info = json.load(fd)
+        
+            result=accounts_info[self.userid]["l_books_borrowed"]
+            #print("accounts_info[self.userid][l_books_borrowed]",result)
+            
+            for i,book in enumerate(result,1):
+               
+                print (f"""Title(book{i}):{book['title']} 
+                       Isbn:{book['isbn']}
+                       Athour:{book['author']}
+                       {'*'*30}
+                        """)
+  
+                    
+            isbn=input ("These are all of books you borrowed \n\nNow import the isbn number to return:\n")  
+            bookclass=None
+           
+            for book in result:
+                # if isbn==book['isbn'] and book['availabe']>1:
+       
+                # elif isbn==book['isbn']and book['availabe']==1:
+                if isbn==book['isbn']:
+                    bookclass=Book(book['title'],book['author'],book['isbn'],1)
+                    self.account.add_return_book(bookclass)
+                    
+
+                
+    def handle_lost_book(self):##2
+          with open("accounts.json", "r") as fd:
+              accounts_info = json.load(fd)
+          
+              result=accounts_info[self.userid]["l_books_borrowed"]
+              #print("accounts_info[self.userid][l_books_borrowed]",result)
+              
+              for i,book in enumerate(result,1):
+                 
+                  print (f"""Title(book{i}):{book['title']} 
+                         Isbn:{book['isbn']}
+                         Athour:{book['author']}
+                         {'*'*30}
+                          """)
+    
+                      
+              isbn=input ("These are all of books you borrowed \n\nNow import the isbn number that you lost:\n")  
+              bookclass=None
+             
+              for book in result:
+                  # if isbn==book['isbn'] and book['availabe']>1:
+         
+                  # elif isbn==book['isbn']and book['availabe']==1:
+                  if isbn==book['isbn']:
+                      bookclass=Book(book['title'],book['author'],book['isbn'],1)
+                      self.account.add_lost_book(bookclass)
+                      
+                      
+    def show_report(self):
             print("""
-                  1. option-1
-                  2. option-2
-                  3. option-3
-                  q. Quit
-                  
-                  """) 
-            choice = input("Please select your option: ")
-            f = {"1": self.foo,
-                 "2": self.foo,
-                 "3": self.foo,
-                 "q": None}.get(choice,None)
-            if choice == "q" or choice =="Q":
-                break
-            elif f == None:
-                print("Try again...")
+                   1-Report Borroew Book
+                   2-Report Return Book
+                   3-Report Lost Book
+                                  
+                  """)
+            select_option=input("Select your option :")
+            if select_option =="1":
+                self.account.printBorrowedBooks()
+            elif select_option =="2":
+                self.account.printreturnBooks()
+            elif select_option =="3":
+                 self.account.printlostBooks()  
             else:
-                f()
+                print("Enter is not valid")

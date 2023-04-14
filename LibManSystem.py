@@ -3,7 +3,7 @@ from LibDatabase import LibDatabase
 from Book import Book
 from Account import Account
 from Staff import Staff
-#from Student import Student
+from Libarian import Libarian
 class LibManSystem:
  
     def __init__(self):
@@ -27,31 +27,52 @@ class LibManSystem:
     def authenticate(cls,userid,password):
         with open("accounts.json", "r") as fd:
             accounts = json.load(fd)
-            # print(acc)  
+            # print(acc) 
+          
         if userid in accounts:
             if accounts[userid]['password'] == password:
                 return True, accounts[userid]
+      
+        
         return False, None
     
     @classmethod       
     def login(cls):
         print("Welcome to BCU Library System")
-        userid = input("Enter userid: ")
-        password = input("Enter your password: ")
-        verify, userinfo = LibManSystem.authenticate(userid, password)
+        i=1
+        while i<3: 
+            userid = input("Enter userid: ")
+            password = input("Enter your password: ")
+            verify, userinfo = LibManSystem.authenticate(userid, password)
+            if verify==True:
+                break
+            i+=1
+            if i!=3:
+                print (f"password is incorrect try again for {i} times")
+               
+                
+           
+                
+              
+          
+           
         if verify:
             print("Welcome....")
             if userinfo["user_type"] == "Staff":
                 
                #,userinfo["history_return"],userinfo["l_lost_Books"],userinfo["acc_fine"]
                 usr = Staff(userinfo["f_name"],userinfo["id"],userinfo["dept"],
-                            Account(userinfo["id"], userinfo["password"], userinfo["f_name"],userinfo["l_books_borrowed"],userinfo["l_books_reserved"]))
+                            Account(userinfo["id"], userinfo["password"], userinfo["f_name"],userinfo["l_books_borrowed"],userinfo["l_books_reserved"],userinfo["history_return"],userinfo["l_lost_Books"]))
+                # print(userinfo["id"], userinfo["password"], userinfo["f_name"],userinfo["l_books_borrowed"],userinfo["l_books_reserved"],userinfo["history_return"],userinfo["l_lost_Books"])
                 usr.menu()
-            elif userinfo["user_type"] == "Student":pass
+            elif userinfo["user_type"] == "Student":
+                pass
                # usr = Student(userinfo["name"],userid,userinfo["class"])
                # usr.menu()
-            elif userinfo["user_type"] == "Libarian":
-                pass
+            elif userinfo["user_type"] == "Librarian":
+               lib = Libarian(userinfo["f_name"],userinfo["id"])
+               lib.menu()
+                           
             else:
                 print("Data error")
             

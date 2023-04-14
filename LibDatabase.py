@@ -2,7 +2,7 @@ import sqlite3
 class LibDatabase:
     def __init__(self):
         
-        self.connection = sqlite3.connect('dbtest2.db')#:memory:
+        self.connection = sqlite3.connect('dbfinal.db')#:memory:
         self.cursor = self.connection.cursor()
 
         self.cursor.execute("""CREATE TABLE IF NOT EXISTS  books(
