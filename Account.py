@@ -13,7 +13,7 @@ class Account:
         self.acc_fine = acc_fine
     
     def add_borrowed_book(self,book):
-        temp_list=None
+        #temp_list=None
         dic={"title":book.title,"author":book.author,"isbn":book.isbn}
         with open("accounts.json", "r") as fd:
             temp_list = json.load(fd)
@@ -27,14 +27,14 @@ class Account:
     
         
     def add_return_book(self,book):
-        temp_list=None
+       # temp_list=None
         dic={"title":book.title,"author":book.author,"isbn":book.isbn}
         with open("accounts.json", "r") as fd:
             temp_list = json.load(fd)
             data= temp_list[self.user_id]["l_books_borrowed"]
           
           
-            for index,bookItem in enumerate(temp_list[self.user_id]["l_books_borrowed"]):
+            for index,bookItem in enumerate(data):
                 
                 if bookItem['isbn']==book.isbn:
                    #print("mina",bookItem['isbn'],book.isbn)
@@ -43,7 +43,8 @@ class Account:
             
             
                    with open('accounts.json', 'w') as f:
-                      json_again = json.dump(temp_list,f)
+                       
+                      json.dump(temp_list,f)  # dump change temp list to json and put it in f
                      # print(json_again) 
                       print("sucseeful deleted from your account")
                    

@@ -12,7 +12,7 @@ class Libarian(User):
               1.List user
               2.All the Return Books
               3.All the Lost Books
-              4.All the Borroed Books
+              4.All the Borrowed Books
               q.Quit
               
               """)
@@ -40,7 +40,7 @@ class Libarian(User):
                   
                   
                   
-    def handel_user_acction(self,select_user):
+    def handel_user_action(self,select_user):
             with open("accounts.json", "r") as fd:
                 accounts_info = json.load(fd)
                 for account in accounts_info:
@@ -81,9 +81,9 @@ class Libarian(User):
                   
                   f_name=accounts_info[accountId]["f_name"]
                   print(f"these are all the books for {f_name}")
-              for i,book in enumerate(result,0):
-                  print("resultttt",book)
-                  print (f"""Title(book{i}):{book['title']} 
+                  for i,book in enumerate(result,0):
+                      print("resultttt",book)
+                      print (f"""Title(book{i}):{book['title']} 
                          Isbn:{book['isbn']}
                          Athour:{book['author']}
                          {'*'*30}
