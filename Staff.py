@@ -4,35 +4,43 @@ from Book import Book
 import json
 class Staff(User):
     
-    def __init__(self, name, userid, staffDept,account):#account agregation shode
+    def __init__(self, name, userid, staffDept,account):#account aggregation shode
         super().__init__(name, userid)
         self.staffDept = staffDept
         self.account=account
-
+    
     def menu(self):
-        print("""
-              1.Borrow Books
-              2.Return Books
-              3.Lost Books
-              4.Report
-              5.Show fine
-              q.Quit
-              
-              """)         
-        opt_staff=input ("Please input the number of option:")
-        
-        if opt_staff=="1" :
-            self.handle_borrowed_book()
-        elif opt_staff=="2" :
-           self.handle_return_book()
-        elif opt_staff=="3" :
-           self.handle_lost_book()
-        elif opt_staff=="4" :
-           self.show_report()
-        elif opt_staff=="5" :
-           self.show_fine()
+        while True:
+            print("""
+                  1.Borrow Books
+                  2.Return Books
+                  3.Lost Books
+                  4.Report
+                  5.Show fine
+                  6.Quit
+                  
+                  """)         
+            opt_staff=input ("Please input the number of option:")
             
-           
+            if opt_staff=="1" :
+                self.handle_borrowed_book()
+            elif opt_staff=="2" :
+               self.handle_return_book()
+            elif opt_staff=="3" :
+               self.handle_lost_book()
+            elif opt_staff=="4" :
+               self.show_report()
+            elif opt_staff=="5" :
+               self.show_fine()
+            elif opt_staff=="6" :
+               print("Exiting program...")
+               break
+            
+            
+    def exit_program():
+      print("Exiting program...")
+      quit()
+        
     def show_fine(self):
        with open("accounts.json", "r") as fd:
            accounts_info = json.load(fd)
@@ -92,9 +100,7 @@ class Staff(User):
             bookclass=None
            
             for book in result:
-                # if isbn==book['isbn'] and book['availabe']>1:
-       
-                # elif isbn==book['isbn']and book['availabe']==1:
+                
                 if isbn==book['isbn']:
                     bookclass=Book(book['title'],book['author'],book['isbn'],1)
                     self.account.add_return_book(bookclass)
@@ -106,7 +112,7 @@ class Staff(User):
               accounts_info = json.load(fd)
           
               result=accounts_info[self.userid]["l_books_borrowed"]
-              #print("accounts_info[self.userid][l_books_borrowed]",result)
+              
               
               for i,book in enumerate(result,1):
                  
@@ -121,9 +127,7 @@ class Staff(User):
               bookclass=None
              
               for book in result:
-                  # if isbn==book['isbn'] and book['availabe']>1:
-         
-                  # elif isbn==book['isbn']and book['availabe']==1:
+                 
                   if isbn==book['isbn']:
                       bookclass=Book(book['title'],book['author'],book['isbn'],1)
                       self.account.add_lost_book(bookclass)
@@ -139,7 +143,7 @@ class Staff(User):
                   """)
             select_option=input("Select your option :")
             if select_option =="1":
-                print(self.account)
+                
                 self.account.print_borrowed_books()
             elif select_option =="2":
                 self.account.printreturnBooks()
