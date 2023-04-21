@@ -1,5 +1,6 @@
 import json
 
+
 class Account:
     def __init__(self,user_id, password, f_name,l_books_borrowed=[],l_books_reserved=[],
                  history_return=None,l_lost_Books = None, acc_fine=None):
@@ -13,7 +14,6 @@ class Account:
         self.acc_fine = acc_fine
     
     def add_borrowed_book(self,book):
-        temp_list=None
         dic={"title":book.title,"author":book.author,"isbn":book.isbn}
         with open("accounts.json", "r") as fd:
             temp_list = json.load(fd)
@@ -22,6 +22,7 @@ class Account:
         with open("accounts.json", "w") as fd:
             fd.write(str(temp_list).replace("'", '"'))
             print("succsessful added to your account")
+                
                
        
     
@@ -37,15 +38,16 @@ class Account:
             for index,bookItem in enumerate(temp_list[self.user_id]["l_books_borrowed"]):
                 
                 if bookItem['isbn']==book.isbn:
-                   #print("mina",bookItem['isbn'],book.isbn)
+                   
                    data.pop(index)
             
             
             
                    with open('accounts.json', 'w') as f:
-                      json_again = json.dump(temp_list,f)
+                      json.dump(temp_list,f)
                      # print(json_again) 
                       print("sucseeful deleted from your account")
+
                    
                 with open("accounts.json", "r") as fd:
                           history_return = json.load(fd)
@@ -54,17 +56,7 @@ class Account:
                 with open("accounts.json", "w") as fd:
                           fd.write(str(history_return).replace("'", '"'))
                            
-           
-
-      
-    
-    
-    
-    def add_decrease_avavilabe_book(self,book):
-        pass
-    
-    
-    
+  
     
     
     def add_lost_book(self,book):
@@ -92,32 +84,30 @@ class Account:
     
     
                 print("lostbook added to the list of lost book in your account ")
-                
     
     
     def add_acc_fine_book(self):
             with open("accounts.json", "r") as fd:
                       lost_book = json.load(fd)
                       lost_book[self.user_id]["acc_fine"]= lost_book[self.user_id]["acc_fine"]+10
-
+                      
             with open("accounts.json", "w") as fd:
                       fd.write(str(lost_book).replace("'", '"'))
     
     def print_borrowed_books(self):
            self.report("l_books_borrowed")
            print ("These are all of books you borrowed ")  
-            
         
     def printreturnBooks(self):
             
             self.report("history_return")
             print ("These are all of books you returned")  
-        
+            
     def printlostBooks(self):
             
            self.report("l_lost_Books")
            print ("These are all of books you lost")
-                
+   
                 
                 
                 
