@@ -3,6 +3,8 @@ from Staff import Staff
 from Account import Account
 import json
 
+#back librarian
+#def reserv
 class Libarian(User):
     def __init__(self, name, userid):
         super().__init__(name, userid)
@@ -13,6 +15,7 @@ class Libarian(User):
               2.All the Return Books
               3.All the Lost Books
               4.All the Borroed Books
+              5.Register User
               q.Quit
               
               """)
@@ -26,6 +29,8 @@ class Libarian(User):
             self.printlostBooks()
         elif select_option=="4": 
             self.printBorrowedBooks()
+        elif select_option=="5": 
+            self.register()
     
     def user_report(self):
           with open("accounts.json", "r") as fd:
@@ -37,8 +42,6 @@ class Libarian(User):
                   print(f"These are list of user {result}**{f_name}")
               select_user=input("Input id  user: ")
               self.handel_user_acction(select_user) 
-                  
-                  
                   
     def handel_user_acction(self,select_user):
             with open("accounts.json", "r") as fd:
@@ -53,15 +56,11 @@ class Libarian(User):
                         if accounts_info[account]["user_type"] == "Sudent":
                             pass
                   
-                 
-                  
-    
     def printreturnBooks(self):
         
         self.report("history_return")
         print ("These are all of books users returned") 
-        
-        
+         
     def printlostBooks(self):
          
         self.report("l_lost_Books")
@@ -88,8 +87,34 @@ class Libarian(User):
                          Athour:{book['author']}
                          {'*'*30}
                           """)
-         
-              
+    
+    def register(self):
+        user_id=input('input user id')  
+        fa_name=input('input user fa name')    
+        password=input('input user password')
+        
+        if user_id == '' or fa_name == '' or password == '':
+            print('not all the info is given')
+            
+        with open("accounts2.json", "r") as fd:
+            accounts = json.load(fd)
+            if user_id in accounts:
+                print('this id already exist')
+            else:
+                dic={"id":user_id,"name":fa_name,"password":password,"l_books_borrowed":[]}
+                print('1')
+                print(accounts)
+                accounts.append(user_id)
+                print('2')
+                print(accounts)
+                print('3')
+                print(accounts[user_id])
+                accounts[user_id].append(dic)
+                print('3')
+                
+        with open("accounts2.json", "w") as fd:
+            fd.write(str(accounts).replace("'", '"'))
+            print('user registered')
           
           
           
