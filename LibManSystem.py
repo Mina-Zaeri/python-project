@@ -4,6 +4,7 @@ from Book import Book
 from Account import Account
 from Staff import Staff
 from Libarian import Libarian
+from Student import Student
 class LibManSystem:
  
     def __init__(self):
@@ -60,15 +61,15 @@ class LibManSystem:
             print("Welcome....")
             if userinfo["user_type"] == "Staff":
                 
-               #,userinfo["history_return"],userinfo["l_lost_Books"],userinfo["acc_fine"]
+               
                 usr = Staff(userinfo["f_name"],userinfo["id"],userinfo["dept"],
-                            Account(userinfo["id"], userinfo["password"], userinfo["f_name"],userinfo["l_books_borrowed"],userinfo["l_books_reserved"],userinfo["history_return"],userinfo["l_lost_Books"]))
-                # print(userinfo["id"], userinfo["password"], userinfo["f_name"],userinfo["l_books_borrowed"],userinfo["l_books_reserved"],userinfo["history_return"],userinfo["l_lost_Books"])
+                      Account(userinfo["id"], userinfo["password"], userinfo["f_name"],userinfo["l_books_borrowed"],userinfo["l_books_reserved"],userinfo["history_return"],userinfo["l_lost_Books"]))
                 usr.menu()
             elif userinfo["user_type"] == "Student":
-                pass
-               # usr = Student(userinfo["name"],userid,userinfo["class"])
-               # usr.menu()
+                
+              Stu = Student(userinfo["f_name"],userinfo["id"],
+                    Account(userinfo["id"], userinfo["password"], userinfo["f_name"],userinfo["l_books_borrowed"],userinfo["l_books_reserved"],userinfo["history_return"],userinfo["l_lost_Books"]))
+              Stu.menu()
             elif userinfo["user_type"] == "Librarian":
                lib = Libarian(userinfo["f_name"],userinfo["id"])
                lib.menu()
