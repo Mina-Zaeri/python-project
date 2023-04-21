@@ -14,7 +14,7 @@ class Libarian(User):
               1.List user
               2.All the Return Books
               3.All the Lost Books
-              4.All the Borroed Books
+              4.All the Borrowed Books
               5.Register User
               q.Quit
               
@@ -29,9 +29,9 @@ class Libarian(User):
             self.printlostBooks()
         elif select_option=="4": 
             self.printBorrowedBooks()
-        elif select_option=="5": 
+        elif select_option=="5":
             self.register()
-    
+
     def user_report(self):
           with open("accounts.json", "r") as fd:
               accounts_info = json.load(fd)
@@ -55,12 +55,12 @@ class Libarian(User):
                             usr.menu()
                         if accounts_info[account]["user_type"] == "Sudent":
                             pass
-                  
+
     def printreturnBooks(self):
         
         self.report("history_return")
         print ("These are all of books users returned") 
-         
+
     def printlostBooks(self):
          
         self.report("l_lost_Books")
@@ -80,22 +80,22 @@ class Libarian(User):
                   
                   f_name=accounts_info[accountId]["f_name"]
                   print(f"these are all the books for {f_name}")
-              for i,book in enumerate(result,0):
-                  print("resultttt",book)
-                  print (f"""Title(book{i}):{book['title']} 
+                  for i,book in enumerate(result,0):
+                      print("result",book)
+                      print (f"""Title(book{i}):{book['title']}
                          Isbn:{book['isbn']}
                          Athour:{book['author']}
                          {'*'*30}
                           """)
-    
+
     def register(self):
-        user_id=input('input user id')  
-        fa_name=input('input user fa name')    
+        user_id=input('input user id')
+        fa_name=input('input user fa name')
         password=input('input user password')
-        
+
         if user_id == '' or fa_name == '' or password == '':
             print('not all the info is given')
-            
+
         with open("accounts2.json", "r") as fd:
             accounts = json.load(fd)
             if user_id in accounts:
@@ -111,7 +111,7 @@ class Libarian(User):
                 print(accounts[user_id])
                 accounts[user_id].append(dic)
                 print('3')
-                
+
         with open("accounts2.json", "w") as fd:
             fd.write(str(accounts).replace("'", '"'))
             print('user registered')
