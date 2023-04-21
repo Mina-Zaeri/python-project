@@ -2,7 +2,7 @@ from User import User
 from LibDatabase import LibDatabase
 from Book import Book
 import json
-class Staff(User):
+class Student(User):
     
     def __init__(self, name, userid,account):#account agregation shode
         super().__init__(name, userid)
@@ -19,16 +19,19 @@ class Staff(User):
               q.Quit
               
               """)         
-        opt_staff=input ("Please input the number of option:")
+        opt_student=input ("Please input the number of option:")
         
-        if opt_staff=="1" :
+        if opt_student=="1" :
             self.handle_borrowed_book()
-        elif opt_staff=="2" :
+        elif opt_student=="2" :
            self.handle_return_book()
-        elif opt_staff=="3" :
+        elif opt_student=="3" :
            self.handle_lost_book()
-        elif opt_staff=="4" :
+        elif opt_student=="4" :
            self.book()
+        elif opt_student=="5" :
+            self.show_fine()
+             
             
            
             
@@ -114,9 +117,7 @@ class Staff(User):
               bookclass=None
              
               for book in result:
-                  # if isbn==book['isbn'] and book['availabe']>1:
-         
-                  # elif isbn==book['isbn']and book['availabe']==1:
+                 
                   if isbn==book['isbn']:
                       bookclass=Book(book['title'],book['author'],book['isbn'],1)
                       self.account.add_lost_book(bookclass)
