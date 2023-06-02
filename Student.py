@@ -10,28 +10,34 @@ class Student(User):
         self.account=account
 
     def menu(self):
-        print("""
+        while True:
+            print("""
               1.Borrow Books
               2.Return Books
               3.Lost Books
-              4.Report
-              5.Calculate fine
-              q.Quit
+              4.Resrve Books
+              5.Report
+              6.Show fine
+              7.Quit
               
               """)         
-        opt_student=input ("Please input the number of option:")
-        
-        if opt_student=="1" :
-            self.handle_borrowed_book()
-        elif opt_student=="2" :
-           self.handle_return_book()
-        elif opt_student=="3" :
-           self.handle_lost_book()
-        elif opt_student=="4" :
-           self.book()
-        elif opt_student=="5" :
-            self.show_fine()
-             
+            opt_student=input ("Please input the number of option:")
+            
+            if opt_student=="1" :
+                self.handle_borrowed_book()
+            elif opt_student=="2" :
+               self.handle_return_book()
+            elif opt_student=="3" :
+               self.handle_lost_book()
+            elif opt_student=="4" :
+                self.reserve_book()
+            elif opt_student=="5" :
+               self.show_report()
+            elif opt_student=="6" :
+               self.show_fine()
+            elif opt_student=="7" :
+               print("Exiting program...")
+               break
             
            
             

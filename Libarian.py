@@ -3,8 +3,6 @@ from Staff import Staff
 from Account import Account
 import json
 
-#back librarian
-#def reserv
 class Libarian(User):
     def __init__(self, name, userid):
         super().__init__(name, userid)

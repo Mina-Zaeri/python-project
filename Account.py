@@ -24,7 +24,17 @@ class Account:
             print("succsessful added to your account")
 
 
-       
+    def l_books_reserved_d(self,book):
+         
+         dic={"title":book.title,"author":book.author,"isbn":book.isbn}
+         with open("accounts.json", "r") as fd:
+             temp_list = json.load(fd)
+             temp_list[self.user_id]["l_books_reserved"].append(dic)
+             
+         with open("accounts.json", "w") as fd:
+             
+             fd.write(str(temp_list).replace("'", '"'))
+             print("succsessful reserved to your account")  
     
         
     def add_return_book(self,book):
@@ -108,7 +118,10 @@ class Account:
            self.report("l_lost_Books")
            print ("These are all of books you lost")
 
-                
+    def printreserveBooks(self):
+               
+            self.report("l_books_reserved")
+            print ("These are all of books you reserved")          
                 
                 
     def report(self,select_string):

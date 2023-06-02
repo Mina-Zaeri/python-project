@@ -15,9 +15,10 @@ class Staff(User):
                   1.Borrow Books
                   2.Return Books
                   3.Lost Books
-                  4.Report
-                  5.Show fine
-                  6.Quit
+                  4.Resrve Books
+                  5.Report
+                  6.Show fine
+                  7.Quit
                   
                   """)         
             opt_staff=input ("Please input the number of option:")
@@ -29,14 +30,51 @@ class Staff(User):
             elif opt_staff=="3" :
                self.handle_lost_book()
             elif opt_staff=="4" :
-               self.show_report()
+                self.reserve_book()
             elif opt_staff=="5" :
-               self.show_fine()
+               self.show_report()
             elif opt_staff=="6" :
+               self.show_fine()
+            elif opt_staff=="7" :
                print("Exiting program...")
                break
             
-            
+    def reserve_book(self):
+        search_arg=input("*************\nPlease inter part or compelte of author's name or isbn number or book's name:")
+        dbbook=LibDatabase()
+        result=dbbook.search(search_arg)
+        if result ==[]  :
+            print ("There is no any book with this information")
+
+        else : 
+            for book in result:
+                
+                print (f"""Title:{book[1]} 
+                             Isbn:{book[0]}
+                             Athour:{book[2]}
+                             Availabe:{book[3]}
+                        """)
+           
+                
+            isbn=input ("These are all of books available \n\nNow import the isbn number is selected:")  
+            bookclass=None
+            for book in result:
+                if isbn==book[0] and book[3]:
+                    bookclass=Book(book[1],book[2],book[0],book[3]) #instance from class book
+                    result=dbbook.issue_book(bookclass)
+                    print("22",result)
+                    self.account.l_books_reserved_d(bookclass)
+                elif book[3]==0 and isbn==book[0] :
+                    print ("book not avaliable")
+               
+                    
+            if bookclass==None:
+                print ("our library has not this book")
+                return 0
+            # result=dbbook.issue_book(bookclass)
+            # print("22",result)
+            # self.account.l_books_reserved(bookclass)
+                   
     def exit_program():
       print("Exiting program...")
       quit()
@@ -141,6 +179,7 @@ class Staff(User):
                    1-Report Borroew Book
                    2-Report Return Book
                    3-Report Lost Book
+                   4-Report Reserve Book
                                   
                   """)
             select_option=input("Select your option :")
@@ -150,6 +189,8 @@ class Staff(User):
             elif select_option =="2":
                 self.account.printreturnBooks()
             elif select_option =="3":
-                 self.account.printlostBooks()  
+                 self.account.printlostBooks() 
+            elif select_option =="4":
+                 self.account.printreserveBooks()
             else:
                 print("Enter is not valid")

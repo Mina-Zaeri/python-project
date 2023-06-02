@@ -4,7 +4,7 @@ from Book import Book
 from Account import Account
 from Staff import Staff
 from Libarian import Libarian
-from Student import Student
+
 class LibManSystem:
  
     def __init__(self):
@@ -67,7 +67,7 @@ class LibManSystem:
                 usr.menu()
             elif userinfo["user_type"] == "Student":
                 
-              Stu = Student(userinfo["f_name"],userinfo["id"],
+              Stu = Staff(userinfo["f_name"],userinfo["id"],None,
                     Account(userinfo["id"], userinfo["password"], userinfo["f_name"],userinfo["l_books_borrowed"],userinfo["l_books_reserved"],userinfo["history_return"],userinfo["l_lost_Books"]))
               Stu.menu()
             elif userinfo["user_type"] == "Librarian":
